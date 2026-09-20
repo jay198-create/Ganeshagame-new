@@ -251,8 +251,13 @@
     const name = getPlayerName();
     const saveButton = document.querySelector("[data-anon-save]");
     if (saveButton) {
-      saveButton.textContent = name ? name + " · Save" : "Save";
-      saveButton.setAttribute("aria-label", "Recovery-key cloud save");
+      const wantedButtonText = name ? name + " · Save" : "Save";
+      if (saveButton.textContent !== wantedButtonText) {
+        saveButton.textContent = wantedButtonText;
+      }
+      if (saveButton.getAttribute("aria-label") !== "Recovery-key cloud save") {
+        saveButton.setAttribute("aria-label", "Recovery-key cloud save");
+      }
     }
 
     const existing = document.querySelector("[data-player-welcome]");

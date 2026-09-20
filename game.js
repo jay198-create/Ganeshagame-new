@@ -224,6 +224,7 @@
       else workshop();
     }
     else if (next === "records") records();
+    else if (next === "guide") festivalGuide();
   }
   function home() {
     const active = profile.active && !profile.active.finished;
@@ -231,6 +232,77 @@
       `<section class="home-stage"><img class="home-backdrop" src="courtyard.png" alt="Moonlit Ganesh festival courtyard"><div class="home-shade"></div><div class="home-content"><div class="eyebrow"><span class="live-dot"></span> GANESH CHATURTHI FESTIVAL JOURNEY</div><h1>GANESHA'S<br><em>FESTIVAL</em><br>JOURNEY</h1><p class="home-subtitle">5 Games · 100 Levels Each · Endless Mode</p><p class="home-description">Play the same five festival games, progress through 100 levels in each,<br>earn Modaks and use them to build your own Ganesh Chaturthi celebration.</p><div class="home-actions">${button("trail", "ENTER THE JOURNEY <span>↗</span>")}${button("workshop", "MY FESTIVAL", "secondary")}${active ? button("continue", "RESUME ACTIVE CLASSIC RUN", "text-button") : ""}</div><div class="home-features"><span>05 FESTIVAL GAMES</span><span>100 LEVELS + ENDLESS</span><span>105 IDOLS</span><span>120 MANDAPS</span><span>500 DECOR OPTIONS</span></div></div><div class="home-corner">${wallet()}<span>Every Modak grows your festival.</span></div><div class="home-caption"><span>GANESH CHATURTHI</span><strong>Play · Build · Puja · Visarjan</strong></div></section><section class="home-lower"><div><span class="eyebrow">ONE GAME. ONE FESTIVAL.</span><h2>Play and build in the same journey.</h2></div><p>Journey contains all five games and their level progression. My Festival contains your idol, mandap, decorations, puja and Visarjan.</p>${button("workshop", "OPEN MY FESTIVAL ↗", "text-button")}</section>${!storageOK ? '<p class="notice">Saving is unavailable in this browser. Progress lasts while this tab stays open.</p>' : ""}`,
     );
   }
+  function festivalGuide() {
+    show(`
+      <section class="festival-guide">
+        <div class="guide-hero">
+          <div>
+            <span class="eyebrow">GANESH CHATURTHI · FESTIVAL GUIDE</span>
+            <h1>Why we welcome Ganesha.</h1>
+            <p>Ganesh Chaturthi, also called Vinayaka Chaturthi, is observed in the Hindu month of Bhadrapada. It celebrates Lord Ganesha, widely revered as Vighnaharta, the remover of obstacles, and as a deity associated with wisdom, auspicious beginnings and learning.</p>
+          </div>
+          <div class="guide-symbol" aria-hidden="true">ॐ</div>
+        </div>
+
+        <div class="guide-grid">
+          <article class="guide-card wide">
+            <span class="guide-number">01</span>
+            <h2>The traditional story</h2>
+            <p>Hindu traditions preserve several accounts of Ganesha's birth. In one of the best-known Puranic narratives, Parvati creates a boy and asks him to guard her privacy. Shiva, not knowing who the boy is, is stopped at the entrance and a conflict follows. The boy is beheaded; after Parvati's grief and anger, he is restored to life with an elephant's head and is given a place of honour among the ganas.</p>
+            <p class="guide-note">This is a religious narrative, not a claim of historical fact. Different Puranas and regional traditions tell the birth and elephant-head story differently.</p>
+          </article>
+
+          <article class="guide-card">
+            <span class="guide-number">02</span>
+            <h2>Why Chaturthi matters</h2>
+            <p>The festival is observed on the fourth lunar day of the bright fortnight of Bhadrapada, usually falling in August or September. Devotees worship Ganesha before new beginnings and seek wisdom, clarity and the removal of obstacles.</p>
+          </article>
+
+          <article class="guide-card">
+            <span class="guide-number">03</span>
+            <h2>From home worship to public Ganeshotsav</h2>
+            <p>Ganapati worship is much older than the modern public festival. In the 1890s, Bal Gangadhar Tilak helped popularize the large public, community form of Ganeshotsav in Maharashtra. Public mandals created spaces for worship, cultural programmes, discussion and collective participation.</p>
+          </article>
+
+          <article class="guide-card">
+            <span class="guide-number">04</span>
+            <h2>How the festival unfolds</h2>
+            <div class="guide-timeline">
+              <div><b>Agaman</b><span>Welcoming the murti into a home or community mandap.</span></div>
+              <div><b>Sthapana & Puja</b><span>Installation, prayers, aarti, flowers, durva and naivedya such as modaks.</span></div>
+              <div><b>Festival Days</b><span>Daily worship, visits, bhajans, community activity, art and cultural programmes.</span></div>
+              <div><b>Procession</b><span>The farewell journey accompanied by devotional chants and music.</span></div>
+              <div><b>Visarjan</b><span>The murti is respectfully immersed, symbolizing farewell and return in the next cycle.</span></div>
+            </div>
+          </article>
+
+          <article class="guide-card">
+            <span class="guide-number">05</span>
+            <h2>What the festival represents</h2>
+            <p>For devotees, Ganesh Chaturthi combines devotion with the idea of beginning well. In public celebrations it also brings neighbourhoods together through volunteering, music, art, food, charitable activity and shared responsibility for the mandal.</p>
+          </article>
+
+          <article class="guide-card">
+            <span class="guide-number">06</span>
+            <h2>Celebrating responsibly</h2>
+            <p>Traditional clay murtis and natural decorations have renewed importance because immersion materials can affect water bodies. Many communities now emphasize shadu clay, natural colours, reusable décor, cleaner processions and responsible immersion practices.</p>
+          </article>
+        </div>
+
+        <section class="guide-sources">
+          <span class="eyebrow">SOURCES & CONTEXT</span>
+          <h2>Learn further</h2>
+          <p>The guide distinguishes devotional tradition from documented modern festival history. For further reading:</p>
+          <div class="guide-links">
+            <a href="https://maharashtratourism.gov.in/festivals/ganesh-chaturthi/" target="_blank" rel="noopener">Maharashtra Tourism · Ganesh Chaturthi ↗</a>
+            <a href="https://southasia.ucla.edu/religions/avatars-divinities/ganesh/" target="_blank" rel="noopener">UCLA MANAS · Ganesh traditions ↗</a>
+            <a href="https://www.siddhivinayak.org/about-the-temple/" target="_blank" rel="noopener">Siddhivinayak Temple Trust ↗</a>
+          </div>
+        </section>
+      </section>
+    `);
+  }
+
   function modeSelector() {
     return `<div class="difficulty" role="group" aria-label="Challenge difficulty">${["standard", "expert"].map((d) => button("difficulty", d === "standard" ? "Standard" : "Expert", "mode " + (difficulty === d ? "selected" : ""), `data-value="${d}" aria-pressed="${difficulty === d}"`)).join("")}</div>`;
   }
@@ -628,7 +700,7 @@
     const action = b.dataset.action,
       value = Number(b.dataset.value),
       r = profile.active;
-    if (["home", "trail", "workshop", "records"].includes(action))
+    if (["home", "trail", "workshop", "records", "guide"].includes(action))
       return navigate(action);
     if (action === "help") return openHelp();
     if (action === "settings") return openSettings();

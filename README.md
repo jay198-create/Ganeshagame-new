@@ -96,3 +96,11 @@ See `docs/ANONYMOUS-CLOUD-SAVE.md` for setup and testing.
 
 The generated 105-idol PNG library is intentionally stored separately from the public Git repository because the asset pack is very large. The catalog expects `assets/idols/idol_001.png` through `idol_105.png`. For production, these assets can be copied into that directory or served as static assets without collecting player information.
 
+
+
+### Mantra and puja expansion
+
+- 43 mantra / shloka learning passages across Common Prayers, Vedic material, Sankata Nashana Ganesha Stotram, Ganesha Pancharatnam, Ganapati Atharvashirsha and Sri Ganapati Talam.
+- Includes Agajanana Padmarkam and Rigveda 2.23.1 (Gananam Tva Ganapatim Havamahe), with the Vedic Brahmanaspati context noted.
+- 32 puja items now use dedicated SVG ritual-object artwork instead of emoji icons.
+- Puja and procession scenes use a darker temple-style visual treatment rather than cartoon-like figures.

@@ -174,7 +174,8 @@
   },true);
 
   document.addEventListener("change",ev=>{
-    if(ev.target.id==="decor-filter"){state.filter=ev.target.value;state.page=0;save();render();}\n    if(ev.target.id==="mantra-filter"){state.mantraGroup=ev.target.value;save();render();}
+    if(ev.target.id==="decor-filter"){state.filter=ev.target.value;state.page=0;save();render();}
+    if(ev.target.id==="mantra-filter"){state.mantraGroup=ev.target.value;save();render();}
     if(ev.target.matches("[data-v5-check]")){const key="day-"+state.day,arr=state.dailyPuja[key]||[],i=Number(ev.target.dataset.v5Check); if(ev.target.checked&&!arr.includes(i))arr.push(i);if(!ev.target.checked&&arr.includes(i))arr.splice(arr.indexOf(i),1);state.dailyPuja[key]=arr;save();render();}
   });
 

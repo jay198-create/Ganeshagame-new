@@ -102,7 +102,8 @@
     const a=b.dataset.arena;
     if(a==="open"){try{document.dispatchEvent(new KeyboardEvent("keydown",{key:"Escape"}));}catch{}st.screen="menu";save();menu();return}
     if(a==="exit"){save();Promise.resolve(window.GFJAnonymousSave?.syncNow?.()).finally(()=>window.GFJClassic?.home?.());return}
-    if(a==="menu"){st.screen="menu";save();menu();return}\n    if(a==="classic"){save();window.GFJClassic?.trail?.();return}
+    if(a==="menu"){st.screen="menu";save();menu();return}
+    if(a==="classic"){save();window.GFJClassic?.trail?.();return}
     if(a==="game"){st.game=b.dataset.id;st.screen="menu";save();menu();return}
     if(a==="difficulty"){st.difficulty=b.dataset.id;st.screen="menu";save();menu();return}
     if(a==="level"){play(Number(b.dataset.level));return}

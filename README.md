@@ -65,7 +65,7 @@ New systems include:
 
 - Five mini-games with Easy, Medium and Hard progression through 100 levels plus Endless mode
 - Modak rewards shared with the main game economy
-- 131-idol shop/catalog support
+- 105-idol shop/catalog support
 - 120 procedural mandap designs
 - 500 decoration combinations
 - Puja-item store
@@ -94,5 +94,5 @@ See `docs/ANONYMOUS-CLOUD-SAVE.md` for setup and testing.
 
 ### Large idol artwork
 
-The generated 131-idol PNG library is intentionally stored separately from the public Git repository because the asset pack is very large. The catalog expects `assets/idols/idol_001.png` through `idol_131.png`. For production, these assets can be copied into that directory or served as static assets without collecting player information.
+The generated 105-idol PNG library is intentionally stored separately from the public Git repository because the asset pack is very large. The catalog expects `assets/idols/idol_001.png` through `idol_105.png`. For production, these assets can be copied into that directory or served as static assets without collecting player information.
 

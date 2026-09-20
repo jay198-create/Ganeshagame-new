@@ -67,7 +67,7 @@
 
   function renderIdols(){
     const per=12, pages=Math.ceil(D.idols.length/per), page=Math.min(state.page,pages-1), rows=D.idols.slice(page*per,page*per+per);
-    return `<div class="v5-title"><div><span class="eyebrow">131 INDIVIDUAL DESIGNS</span><h2>Choose your Ganesha idol</h2><p>Different sizes, styles and budgets. Buy once, then switch between owned idols freely.</p></div></div>
+    return `<div class="v5-title"><div><span class="eyebrow">105 INDIVIDUAL DESIGNS</span><h2>Choose your Ganesha idol</h2><p>Different sizes, styles and budgets. Buy once, then switch between owned idols freely.</p></div></div>
       <div class="v5-catalog">${rows.map(x=>`<article class="shop-card ${state.selectedIdol===x.id?"selected":""}">
         <div class="asset-box"><img src="${x.image}" alt="${e(x.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="asset-fallback">ॐ</span></div>
         <h3>${e(x.name)}</h3><p>${x.sizeFt} ft · ${e(x.style)} · ${e(x.color)}</p>

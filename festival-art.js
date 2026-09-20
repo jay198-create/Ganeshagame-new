@@ -128,16 +128,94 @@
 
   function pujaSvg(item){
     if(!item) return "";
-    const fake={id:item.id,name:item.name,category:
-      /diya|camphor/i.test(item.name)?"Deepam Row":
-      /kalash|water/i.test(item.name)?"Kalash":
-      /lotus/i.test(item.name)?"Lotus Arrangement":
-      /flower/i.test(item.name)?"Flower Garland":
-      /coconut/i.test(item.name)?"Coconut Decor":
-      /rice|durva|leaf|thread/i.test(item.name)?"Rice Sheaf":
-      "Rangoli",
-      tier:2,primary:"#d69a37",secondary:"#6f311f"};
-    return decorSvg(fake);
+    const id=uid("p",item.id), key=item.artKey||"offering";
+    const brass=`url(#brass-${id})`, copper=`url(#copper-${id})`, silver=`url(#silver-${id})`;
+    const frame=`
+      <defs>
+        <linearGradient id="brass-${id}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6b4017"/><stop offset=".23" stop-color="#f2c66c"/><stop offset=".52" stop-color="#9a611f"/><stop offset=".77" stop-color="#ffe0a0"/><stop offset="1" stop-color="#6b4017"/></linearGradient>
+        <linearGradient id="copper-${id}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#542819"/><stop offset=".3" stop-color="#c87945"/><stop offset=".63" stop-color="#f0ad75"/><stop offset="1" stop-color="#6f321d"/></linearGradient>
+        <linearGradient id="silver-${id}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#68757b"/><stop offset=".3" stop-color="#eff5f3"/><stop offset=".55" stop-color="#aab8bb"/><stop offset=".82" stop-color="#ffffff"/><stop offset="1" stop-color="#59676c"/></linearGradient>
+        <radialGradient id="halo-${id}"><stop stop-color="#e9bb7040"/><stop offset="1" stop-color="#08191f00"/></radialGradient>
+        <filter id="shadow-${id}" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity=".5"/></filter>
+      </defs>
+      <rect x="2" y="2" width="156" height="126" rx="17" fill="#091a20" stroke="#e7ba7050"/>
+      <circle cx="80" cy="61" r="56" fill="url(#halo-${id})"/>
+      <ellipse cx="80" cy="109" rx="49" ry="10" fill="#000" opacity=".3"/>
+    `;
+    let art="";
+    const bowl=(fill="#d49b3e",inside="#c84735")=>`<g filter="url(#shadow-${id})"><ellipse cx="80" cy="82" rx="32" ry="11" fill="${fill}"/><path d="M48 81 Q52 111 80 114 Q108 111 112 81" fill="${fill}"/><ellipse cx="80" cy="81" rx="27" ry="8" fill="${inside}"/><ellipse cx="80" cy="79" rx="20" ry="4" fill="#ffffff25"/></g>`;
+    const tray=()=>`<g filter="url(#shadow-${id})"><ellipse cx="80" cy="92" rx="45" ry="15" fill="${brass}" stroke="#ffe1a3" stroke-width="1.4"/><ellipse cx="80" cy="89" rx="38" ry="10" fill="#6f431c" opacity=".45"/></g>`;
+
+    switch(key){
+      case "durva":
+        art=`<g filter="url(#shadow-${id})">${Array.from({length:11},(_,i)=>`<path d="M${55+i*5} 99 Q${48+i*4} ${63-(i%3)*8} ${54+i*5} ${30+(i%4)*6}" fill="none" stroke="${i%2?"#5aa151":"#7fbe63"}" stroke-width="3" stroke-linecap="round"/>`).join("")}<path d="M52 99 Q80 109 108 99" stroke="#8a622e" stroke-width="5" stroke-linecap="round"/></g>`; break;
+      case "hibiscus":
+        art=`<g transform="translate(80 66)" filter="url(#shadow-${id})">${[0,72,144,216,288].map(a=>`<ellipse cx="0" cy="-24" rx="17" ry="30" transform="rotate(${a})" fill="#bf2536" stroke="#ee6c7c" stroke-width="1.2"/>`).join("")}<circle r="13" fill="#8e1726"/><path d="M0 2 Q18 16 21 37" stroke="#dba13d" stroke-width="3" fill="none"/>${Array.from({length:6},(_,i)=>`<circle cx="${20+i%2*4}" cy="${28+i*3}" r="1.7" fill="#ffd36a"/>`).join("")}</g>`; break;
+      case "lotus":
+        art=`<g transform="translate(80 72)" filter="url(#shadow-${id})">${[0,45,90,135,180,225,270,315].map(a=>`<ellipse cx="0" cy="-23" rx="11" ry="27" transform="rotate(${a})" fill="#db7298" stroke="#f2a3bc"/>`).join("")}${[22,67,112,157,202,247,292,337].map(a=>`<ellipse cx="0" cy="-15" rx="8" ry="19" transform="rotate(${a})" fill="#efabc0"/>`).join("")}<circle r="8" fill="#f2c45f"/></g>`; break;
+      case "marigold":
+        art=`<g filter="url(#shadow-${id})">${[[58,64],[83,54],[102,70],[72,87],[96,91]].map(([x,y],j)=>`<g transform="translate(${x} ${y})">${rosette(0,0,19,10,j%2?"#f4a712":"#e47f0d","#ffd15e")}</g>`).join("")}</g>`; break;
+      case "coconut":
+        art=`<g filter="url(#shadow-${id})"><ellipse cx="80" cy="76" rx="27" ry="36" fill="#6c3f28"/><path d="M61 49 Q80 37 99 49" stroke="#b48458" stroke-width="5"/><path d="M66 45 Q58 26 49 17 M79 42 Q80 22 80 13 M92 46 Q102 29 111 20" stroke="#4e8e48" stroke-width="7" stroke-linecap="round"/><circle cx="70" cy="70" r="3.4" fill="#302017"/><circle cx="81" cy="67" r="3.4" fill="#302017"/><circle cx="91" cy="73" r="3.4" fill="#302017"/></g>`; break;
+      case "banana":
+        art=`<g filter="url(#shadow-${id})">${[0,1,2,3].map(i=>`<path d="M50 ${55+i*7} Q79 ${89+i*3} 111 ${57+i*2} Q92 ${100+i*2} 55 ${75+i*5}Z" fill="${i%2?"#e7c743":"#f0d85a"}" stroke="#9b7e1e" stroke-width="1.2"/>`).join("")}<path d="M50 55 Q43 48 45 40" stroke="#6f7a2c" stroke-width="5"/></g>`; break;
+      case "fruit":
+        art=tray()+`<g filter="url(#shadow-${id})"><circle cx="61" cy="75" r="13" fill="#bb3a3e"/><circle cx="86" cy="71" r="14" fill="#d98b2c"/><ellipse cx="101" cy="83" rx="15" ry="11" fill="#6ea34f"/><path d="M56 64 q6-9 12-4" stroke="#4b813e" stroke-width="3"/></g>`; break;
+      case "modak":
+        art=tray()+`<g filter="url(#shadow-${id})">${[58,80,102].map((x,i)=>`<path d="M${x-12} 88 Q${x} ${48-i*3} ${x+12} 88 Q${x} 103 ${x-12} 88Z" fill="${i===1?"#f1c76d":"#ddb05b"}" stroke="#9c6a27" stroke-width="1.4"/><path d="M${x} 54 v28 M${x-6} 62 l6-8 6 8" stroke="#fff0b2" stroke-width="1.2" opacity=".65"/>`).join("")}</g>`; break;
+      case "panchamrit":
+        art=bowl(silver,"#f1e8cf")+`<g opacity=".9"><circle cx="69" cy="77" r="3" fill="#d9b35b"/><circle cx="82" cy="78" r="2.5" fill="#f1cc72"/><circle cx="94" cy="76" r="3" fill="#c78d4b"/></g>`; break;
+      case "milk":
+        art=`<g filter="url(#shadow-${id})"><path d="M55 43 Q80 35 105 43 L100 101 Q80 113 60 101Z" fill="${silver}" stroke="#e9f3f4"/><ellipse cx="80" cy="44" rx="24" ry="8" fill="#fffdf1"/><path d="M104 53 q27 5 18 31 q-5 13-20 7" fill="none" stroke="#cbd8d8" stroke-width="7"/></g>`; break;
+      case "ghee":
+        art=`<g filter="url(#shadow-${id})"><path d="M51 47 Q80 37 109 47 L103 102 Q80 113 57 102Z" fill="${brass}" stroke="#ffe1a2"/><ellipse cx="80" cy="48" rx="25" ry="8" fill="#f5d86a"/><ellipse cx="80" cy="48" rx="17" ry="4" fill="#fff4a8" opacity=".7"/></g>`; break;
+      case "honey":
+        art=`<g filter="url(#shadow-${id})"><rect x="52" y="42" width="56" height="65" rx="13" fill="#b96b1e" stroke="#efbd62" stroke-width="2"/><rect x="60" y="32" width="40" height="15" rx="4" fill="${brass}"/><path d="M56 65 Q80 55 104 65 V95 Q80 105 56 95Z" fill="#e9a32b" opacity=".8"/><path d="M71 73 h18 l-9 16Z" fill="#704119" opacity=".65"/></g>`; break;
+      case "jaggery":
+        art=tray()+`<g filter="url(#shadow-${id})">${[[62,78],[81,72],[98,81],[75,91],[93,94]].map(([x,y],i)=>`<path d="M${x-9} ${y-7} l13-5 8 9-5 12-14 1-6-9Z" fill="${i%2?"#a9652e":"#c47b35"}" stroke="#e1a46b"/>`).join("")}</g>`; break;
+      case "rice":
+        art=bowl(brass,"#f4eed9")+`<g fill="#fffaf0">${Array.from({length:28},(_,i)=>`<ellipse cx="${58+(i*17)%44}" cy="${73+((i*11)%15)}" rx="2.5" ry="1.1" transform="rotate(${(i*31)%180} ${58+(i*17)%44} ${73+((i*11)%15)})"/>`).join("")}</g>`; break;
+      case "turmeric":
+        art=bowl(brass,"#e7a91e")+`<circle cx="80" cy="78" r="18" fill="#efb726"/><path d="M66 81 Q80 69 94 81" stroke="#ffd45c" stroke-width="3" opacity=".65"/>`; break;
+      case "kumkum":
+        art=bowl(brass,"#a71323")+`<circle cx="80" cy="78" r="18" fill="#c51d32"/><path d="M67 81 Q80 69 93 81" stroke="#f26773" stroke-width="3" opacity=".6"/>`; break;
+      case "sandal":
+        art=bowl(brass,"#c99462")+`<circle cx="80" cy="78" r="18" fill="#d7ae80"/><path d="M64 79 Q80 68 96 79" stroke="#f0d5b3" stroke-width="3" opacity=".7"/>`; break;
+      case "betel-leaf":
+        art=`<g filter="url(#shadow-${id})">${[[65,68,-22],[85,63,8],[95,84,29],[68,90,-8]].map(([x,y,a],i)=>`<path d="M${x} ${y+20} Q${x-22} ${y} ${x} ${y-28} Q${x+22} ${y} ${x} ${y+20}Z" fill="${i%2?"#32783e":"#3e8d4a"}" stroke="#7fc37c" transform="rotate(${a} ${x} ${y})"/><path d="M${x} ${y+15} L${x} ${y-20}" stroke="#b2d29b" stroke-width="1.3" transform="rotate(${a} ${x} ${y})"/>`).join("")}</g>`; break;
+      case "betel-nut":
+        art=tray()+`<g filter="url(#shadow-${id})">${[[63,79],[82,73],[100,82],[77,91],[94,94]].map(([x,y],i)=>`<ellipse cx="${x}" cy="${y}" rx="9" ry="12" fill="${i%2?"#8b4d2e":"#a55c34"}" stroke="#cf8c5e"/>`).join("")}</g>`; break;
+      case "kalash":
+        art=`<g filter="url(#shadow-${id})"><path d="M53 54 Q80 42 107 54 L101 68 Q116 90 99 111 Q80 123 61 111 Q44 90 59 68Z" fill="${brass}" stroke="#ffe2a2" stroke-width="1.6"/><ellipse cx="80" cy="57" rx="25" ry="8" fill="#7d4b20"/><path d="M80 53 Q58 30 47 24 Q65 22 80 40 Q95 22 113 24 Q102 30 80 53" fill="#4c8d49"/><ellipse cx="80" cy="52" rx="15" ry="18" fill="#6d4228"/><path d="M69 39 Q79 23 88 40" stroke="#7da950" stroke-width="5"/></g>`; break;
+      case "mango-leaves":
+        art=`<g filter="url(#shadow-${id})"><path d="M80 105 Q78 70 80 33" stroke="#7c5b29" stroke-width="4"/>${[-38,-20,0,20,38].map((dx,i)=>`<path d="M80 ${84-i*9} Q${80+dx} ${56-i*4} ${80+dx*1.35} ${43-i*3} Q${84+dx*.5} ${77-i*6} 80 ${84-i*9}Z" fill="${i%2?"#4f934b":"#65a857"}" stroke="#8ac87a"/>`).join("")}</g>`; break;
+      case "incense":
+        art=`<g filter="url(#shadow-${id})"><ellipse cx="80" cy="103" rx="36" ry="9" fill="${brass}"/>${[65,80,95].map((x,i)=>`<path d="M${x} 98 L${x+8-i*8} 37" stroke="#9a5b35" stroke-width="3"/><path d="M${x+8-i*8} 37 Q${x-5} 25 ${x+10} 13 Q${x+22} 2 ${x+13} -5" fill="none" stroke="#d6d9d3" stroke-width="2" opacity=".55"/>`).join("")}</g>`; break;
+      case "dhoop":
+        art=`<g filter="url(#shadow-${id})"><path d="M52 69 Q80 55 108 69 L101 105 Q80 116 59 105Z" fill="${copper}" stroke="#f0b37b"/><ellipse cx="80" cy="69" rx="28" ry="9" fill="#2d2724"/><circle cx="80" cy="66" r="10" fill="#5d3c2c"/><path d="M79 57 Q56 35 75 18 Q88 7 80 -7 M84 58 Q107 36 90 19" fill="none" stroke="#d9ded9" stroke-width="3" opacity=".6"/></g>`; break;
+      case "camphor":
+        art=tray()+`<g filter="url(#shadow-${id})">${[[67,83],[83,77],[96,87]].map(([x,y],i)=>`<rect x="${x-8}" y="${y-8}" width="16" height="16" rx="3" fill="#f7f3e9" stroke="#cbd5d2"/>`).join("")}<path d="M83 65 Q73 49 84 37 Q95 49 83 65" fill="#ffce58"/><path d="M83 60 Q78 50 84 44" stroke="#fff3b4" stroke-width="3"/></g>`; break;
+      case "diya":
+        art=`<g filter="url(#shadow-${id})"><path d="M40 77 Q80 111 120 77 Q113 111 80 116 Q47 111 40 77Z" fill="${brass}" stroke="#ffe1a1" stroke-width="1.7"/><ellipse cx="80" cy="77" rx="40" ry="12" fill="#75471e"/><path d="M80 73 Q59 42 80 22 Q102 43 80 73" fill="#f4a72c"/><path d="M80 65 Q70 45 81 34" stroke="#ffeaa2" stroke-width="5" stroke-linecap="round"/></g>`; break;
+      case "wicks":
+        art=tray()+`<g filter="url(#shadow-${id})">${Array.from({length:8},(_,i)=>`<path d="M${53+i*8} ${86+(i%2)*5} Q${56+i*8} 69 ${61+i*7} 58" fill="none" stroke="#f4eee0" stroke-width="4" stroke-linecap="round"/>`).join("")}</g>`; break;
+      case "bell":
+        art=`<g filter="url(#shadow-${id})"><path d="M75 24 Q80 14 85 24 L85 36 Q104 51 105 83 H55 Q56 51 75 36Z" fill="${brass}" stroke="#ffe1a1" stroke-width="1.6"/><rect x="65" y="83" width="30" height="8" rx="4" fill="${brass}"/><circle cx="80" cy="94" r="7" fill="#bb7d2c"/><path d="M73 33 Q80 26 87 33" fill="none" stroke="#fff0b9" stroke-width="2"/></g>`; break;
+      case "aarti":
+        art=tray()+`<g filter="url(#shadow-${id})">${[[60,82],[80,75],[100,82]].map(([x,y])=>`<path d="M${x-9} ${y} Q${x} ${y+8} ${x+9} ${y} Q${x+5} ${y+12} ${x} ${y+13} Q${x-5} ${y+12} ${x-9} ${y}Z" fill="#b97125"/><path d="M${x} ${y-2} Q${x-6} ${y-14} ${x} ${y-22} Q${x+8} ${y-13} ${x} ${y-2}" fill="#ffd25e"/>`).join("")}<circle cx="80" cy="93" r="7" fill="#c81e32"/></g>`; break;
+      case "prasadam":
+        art=tray()+`<g filter="url(#shadow-${id})"><path d="M62 88 Q70 61 78 88 Q70 100 62 88Z" fill="#e2b358"/><path d="M82 88 Q91 57 101 88 Q91 102 82 88Z" fill="#efc76b"/><circle cx="55" cy="88" r="7" fill="#c8523b"/><circle cx="108" cy="89" r="7" fill="#6b9d45"/></g>`; break;
+      case "flower-basket":
+        art=`<g filter="url(#shadow-${id})"><path d="M46 70 Q80 58 114 70 L106 108 Q80 121 54 108Z" fill="#8c5d31" stroke="#d3a46c"/><path d="M55 69 Q80 26 105 69" fill="none" stroke="#a87945" stroke-width="5"/>${[[58,70,"#d84e61"],[75,64,"#efad24"],[93,69,"#e17aa1"],[105,77,"#f3c044"],[70,82,"#d54e72"],[90,84,"#f1a328"]].map(([x,y,col])=>`<g transform="translate(${x} ${y})">${rosette(0,0,10,7,col,"#ffd77d")}</g>`).join("")}</g>`; break;
+      case "thread":
+        art=`<g filter="url(#shadow-${id})"><circle cx="80" cy="70" r="31" fill="${silver}" stroke="#eaf0ee" stroke-width="2"/><circle cx="80" cy="70" r="14" fill="#091a20"/>${Array.from({length:8},(_,i)=>`<path d="M80 39 Q${45+i*10} 67 80 101" fill="none" stroke="#f4efe4" stroke-width="2" opacity=".9"/>`).join("")}<path d="M104 92 Q130 100 126 116" fill="none" stroke="#f4efe4" stroke-width="3"/></g>`; break;
+      case "vastra":
+        art=`<g filter="url(#shadow-${id})"><path d="M45 40 L112 51 L99 110 L34 97Z" fill="#a72d3b" stroke="#e8b260" stroke-width="2"/><path d="M52 49 L104 58 M48 62 L101 71 M44 75 L98 84" stroke="#e8b260" stroke-width="2" opacity=".65"/><path d="M43 93 L98 106" stroke="#f7d08b" stroke-width="4"/></g>`; break;
+      default:
+        art=tray()+`<circle cx="80" cy="76" r="24" fill="${brass}"/>`;
+    }
+
+    return `<svg class="puja-art" viewBox="0 0 160 130" role="img" aria-label="${esc(item.name)}">${frame}${art}<path d="M18 116 H142" stroke="#e7ba7040" stroke-width="1"/></svg>`;
   }
 
   function scene(mandap,idol,decorations=[]){

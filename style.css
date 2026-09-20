@@ -2139,3 +2139,31 @@ dialog li b {
   font-weight: 700;
   letter-spacing: 0.7px;
 }
+
+
+/* Ganesh Chaturthi guide */
+.festival-guide{max-width:1380px;margin:0 auto;padding:20px 18px 48px}
+.guide-hero{position:relative;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(240px,.8fr);gap:24px;align-items:center;min-height:340px;padding:48px;border:1px solid #d8b46b30;border-radius:16px;overflow:hidden;background:radial-gradient(circle at 80% 42%,#27424866,transparent 34%),linear-gradient(135deg,#0e252c,#07171d 72%)}
+.guide-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#07171d00 55%,#e1b96d0a);pointer-events:none}
+.guide-hero h1{font:clamp(44px,7vw,92px)/.94 var(--serif);margin:12px 0 18px;max-width:800px}
+.guide-hero p{max-width:760px;color:#bac8c4;font-size:16px;line-height:1.8}
+.guide-symbol{display:grid;place-items:center;min-height:230px;font:clamp(120px,16vw,220px)/1 var(--serif);color:#e4b96b;text-shadow:0 0 60px #e4b96b22;opacity:.88}
+.guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:18px}
+.guide-card{position:relative;padding:28px;border:1px solid #d8b46b29;border-radius:14px;background:linear-gradient(160deg,#10262c,#0a1b20);box-shadow:0 18px 40px #0003}
+.guide-card.wide{grid-column:1/-1}
+.guide-card h2,.guide-sources h2{font:32px/1.05 var(--serif);margin:8px 0 14px}
+.guide-card p{color:#aebdb9;line-height:1.75;margin:0}
+.guide-card p+p{margin-top:13px}
+.guide-number{font-size:10px;letter-spacing:2px;color:#e4b96b}
+.guide-note{padding:14px 16px;border-left:2px solid #e4b96b;background:#06171c88;border-radius:0 8px 8px 0;color:#c7d0cd!important}
+.guide-timeline{display:grid;gap:10px;margin-top:8px}
+.guide-timeline>div{display:grid;grid-template-columns:130px 1fr;gap:18px;padding:14px 0;border-bottom:1px solid #ffffff0e}
+.guide-timeline>div:last-child{border-bottom:0}
+.guide-timeline b{color:#e5be76;letter-spacing:.3px}
+.guide-timeline span{color:#aebdb9;line-height:1.55}
+.guide-sources{margin-top:18px;padding:28px;border:1px solid #d8b46b29;border-radius:14px;background:#091a20}
+.guide-sources p{color:#aebdb9}
+.guide-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.guide-links a{display:inline-flex;padding:11px 14px;border:1px solid #d8b46b38;border-radius:999px;color:#e5c786;text-decoration:none;background:#10262c}
+.guide-links a:hover{border-color:#e5c786;color:#fff0c8}
+@media(max-width:820px){.guide-hero{grid-template-columns:1fr;padding:30px}.guide-symbol{display:none}.guide-grid{grid-template-columns:1fr}.guide-card.wide{grid-column:auto}.guide-timeline>div{grid-template-columns:1fr;gap:5px}.festival-guide{padding-inline:10px}}

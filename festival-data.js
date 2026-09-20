@@ -778,6 +778,8 @@
 
   function pad(n){ return String(n).padStart(3,"0"); }
 
+  const idolFiles = ["idol_021.png","idol_022.png","idol_023.png","idol_024.png","idol_025.png","idol_026.png","idol_027.png","idol_028.png","idol_029.png","idol_030.png","idol_031.png","idol_032.png","idol_033.png","idol_034.png","idol_035.png","idol_036.png","idol_038.png","idol_040.png","idol_042.png","idol_043.png","idol_044.png","idol_045.png","idol_046.png","idol_047.png","idol_048.png","idol_049.png","idol_050.png","idol_053.png","idol_055.png","idol_056.png","idol_057.png","idol_058.png","idol_059.png","idol_060.png","idol_061.png","idol_062.png","idol_063.png","idol_064.png","idol_065.png","idol_066.png","idol_067.png","idol_068.png","idol_069.png","idol_070.png","idol_071.png","idol_072.png","idol_073.png","idol_074.png","idol_075.png","idol_076.png","idol_077.png","idol_078.png","idol_079.png","idol_080.png","idol_081.png","idol_082.png","idol_083.png","idol_084.png","idol_085.png","idol_086.png","idol_087.png","idol_088.png","idol_089.png","idol_090.png","idol_091.png","idol_092.png","idol_093.png","idol_094.png","idol_095.png","idol_096.png","idol_097.png","idol_098.png","idol_099.png","idol_100.png","idol_101.png","idol_102.png","idol_103.png","idol_104.png","idol_105.png","idol_106.png","idol_107.png","idol_108.png","idol_109.png","idol_110.png","idol_111.png","idol_112.png","idol_113.png","idol_114.png","idol_115.png","idol_116.png","idol_117.png","idol_118.png","idol_119.png","idol_120.png","idol_121.png","idol_122.png","idol_123.png","idol_124.png","idol_125.png","idol_126.png","idol_127.png","idol_128.png","idol_129.png","idol_130.png","idol_131.png"];
+
   const idols = Array.from({length:105},(_,i)=>{
     const n=i+1;
     const sizes=[1,2,3,4,5];
@@ -786,7 +788,7 @@
     return {
       id:`idol-${pad(n)}`,
       name:`Ganesha Idol ${pad(n)}`,
-      image:`assets/idols/${window.GFJIdolRegions?.[i]?.file || "individuals.webp"}`,
+      image:`assets/idols/${idolFiles[i]}`,
       sizeFt:sizes[i%sizes.length],
       style:styles[i%styles.length],
       color:colors[(i*3)%colors.length],

@@ -19,3 +19,33 @@
 .ritual-scene,.festival-day-scene,.procession-scene{margin:14px 0 18px;border-radius:12px;overflow:hidden}
 .ritual-art,.festival-day-art,.procession-art{display:block;width:100%;height:auto}
 .procession-scene{border:1px solid var(--line);background:#08191f}
+
+/* Premium puja collection */
+.puja-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:20px}
+.puja-card{position:relative;overflow:hidden;border:1px solid #e7ba702f;border-radius:14px;background:linear-gradient(180deg,#10272d,#0b1d22);padding:16px;box-shadow:0 18px 40px #0003}
+.puja-card.owned{border-color:#68c8ab66}
+.puja-visual{height:185px;display:grid;place-items:center;border-radius:10px;background:radial-gradient(circle at 50% 38%,#e8ba7014,transparent 58%),linear-gradient(180deg,#08191f,#0b2026);border:1px solid #ffffff0c}
+.puja-art{width:100%;height:100%;display:block}
+.puja-copy{padding:14px 2px 10px}
+.puja-copy h3{margin:5px 0 8px;font-size:20px;font-family:var(--serif);font-weight:600}
+.puja-copy p{min-height:44px;margin:0 0 10px;color:var(--muted);font-size:12px;line-height:1.6}
+.puja-copy>b{color:var(--gold)}
+.puja-card>button{width:100%;margin-top:5px}
+.puja-card>em{position:absolute;right:14px;top:14px;font-style:normal;font-size:9px;letter-spacing:1.5px;color:var(--mint);border:1px solid #68c8ab4d;border-radius:20px;padding:6px 8px;background:#07191fcc}
+
+/* Mantra library */
+.mantra-toolbar{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:18px 0}
+.mantra-toolbar label{font-size:11px;letter-spacing:1.2px;color:var(--muted);min-width:min(420px,100%)}
+.mantra-toolbar select{display:block;width:100%;margin-top:7px;padding:12px 14px;border:1px solid var(--line);border-radius:7px;background:#081b23;color:var(--text)}
+.mantra-toolbar>span{font-size:11px;color:var(--muted);padding-bottom:12px}
+.mantra-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+.mantra{background:linear-gradient(160deg,#11292f,#0b1d22);border-color:#e7ba702b;box-shadow:0 16px 34px #0002}
+.mantra-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+.mantra-head h3{font-size:24px;margin:.3em 0}
+.mantra-script{font-size:9px;letter-spacing:1.2px;color:#d9bc84;border:1px solid #d9bc8438;padding:5px 7px;border-radius:20px;white-space:nowrap}
+.mantra .devanagari{padding:16px 18px;border-left:2px solid #d7a65e;background:#081b236e;border-radius:0 8px 8px 0;font-size:23px;line-height:1.75}
+.mantra-roman{font-size:13px;line-height:1.8;color:#d7ded9;padding:10px 0;font-style:italic}
+.mantra small{line-height:1.55}
+
+@media(max-width:1050px){.puja-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.puja-grid,.mantra-list{grid-template-columns:1fr}.mantra-toolbar{align-items:stretch;flex-direction:column}.puja-visual{height:210px}}

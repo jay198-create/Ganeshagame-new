@@ -159,7 +159,7 @@
     if(a==="learn-mantra"){if(!state.mantraLearned.includes(id))state.mantraLearned.push(id);save();render();return;}
     if(a==="complete-day"){if(state.day<state.duration)state.day++; else state.processionStep=0;save();state.view=state.day>=state.duration?"procession":"festival";render();return;}
     if(a==="procession-next"){const steps=7;if(state.processionStep<steps-1)state.processionStep++;else state.visarjanComplete=true;save();render();return;}
-    if(a==="back-game"){save();Promise.resolve(window.GFJAnonymousSave?.syncNow?.()).finally(()=>location.reload());return;}
+    if(a==="back-game"){save();Promise.resolve(window.GFJAnonymousSave?.syncNow?.()).finally(()=>window.GFJClassic?.home?.());return;}
   },true);
 
   document.addEventListener("change",ev=>{
@@ -167,15 +167,12 @@
     if(ev.target.matches("[data-v5-check]")){const key="day-"+state.day,arr=state.dailyPuja[key]||[],i=Number(ev.target.dataset.v5Check); if(ev.target.checked&&!arr.includes(i))arr.push(i);if(!ev.target.checked&&arr.includes(i))arr.splice(arr.indexOf(i),1);state.dailyPuja[key]=arr;save();render();}
   });
 
-  function addNav(){
-    const nav=document.querySelector("header nav");
-    if(!nav||nav.querySelector("[data-v5='open']")) return;
-    const studio=document.createElement("button");
-    studio.textContent="Festival Studio";
-    studio.dataset.v5="open";
-    nav.insertBefore(studio,nav.firstChild);
-  }
-
-  addNav();
-  new MutationObserver(addNav).observe(document.body,{childList:true,subtree:true});
+  window.GFJFestivalStudio = {
+    open() {
+      try { document.dispatchEvent(new KeyboardEvent("keydown",{key:"Escape"})); } catch {}
+      state.view="setup";
+      save();
+      render();
+    }
+  };
 })();

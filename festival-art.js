@@ -219,10 +219,8 @@
   }
 
   function idolHtml(idol) {
-    const index=Number(String(idol.id).replace("idol-",""))-1;
-    const r=window.GFJIdolRegions?.[index];
-    if(!r)return '<span class="scene-idol-fallback">ॐ</span>';
-    return `<svg class="idol-art" viewBox="${r.box.join(' ')}" role="img" aria-label="${esc(idol.name)}" preserveAspectRatio="xMidYMid meet"><image href="assets/idols/${r.file}" width="${r.size[0]}" height="${r.size[1]}"/></svg>`;
+    if(!idol?.image)return '<span class="scene-idol-fallback">ॐ</span>';
+    return `<img class="idol-art" src="${esc(idol.image)}" alt="${esc(idol.name)}" loading="lazy" decoding="async">`;
   }
   function scene(mandap,idol,decorations=[]){
     const m = mandap || {id:"mandap-preview",name:"Festival Mandap",primary:"#c58a35",secondary:"#173e39",architecture:"Temple Arch",roof:"arch",pillars:4,pattern:1};

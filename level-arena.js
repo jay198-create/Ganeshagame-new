@@ -54,13 +54,14 @@
   }
   function shell(body){
     const p=prof();
-    return `<section class="arena-shell"><div class="arena-head"><div><span class="eyebrow">100 LEVELS + ENDLESS</span><h1>Festival Skill Arena</h1></div><div class="v5-wallet"><b>${Number(p.coins)||0}</b><span>MODAKS</span></div></div>${body}<div class="arena-foot"><button data-arena="exit" class="secondary">← Back to game</button><small>Every completed level saves automatically.</small></div></section>`;
+    return `<section class="arena-shell"><div class="arena-head"><div><span class="eyebrow">JOURNEY · 5 GAMES · 100 LEVELS EACH</span><h1>Your Festival Journey</h1></div><div class="v5-wallet"><b>${Number(p.coins)||0}</b><span>MODAKS</span></div></div>${body}<div class="arena-foot"><button data-arena="exit" class="secondary">← Back to game</button><small>Every completed level saves automatically.</small></div></section>`;
   }
   function menu(){
     app.innerHTML=shell(`<div class="arena-pickers"><div><h3>Game</h3>${games.map(g=>`<button data-arena="game" data-id="${g.id}" class="${st.game===g.id?"active":""}">${g.icon} ${g.name}</button>`).join("")}</div><div><h3>Difficulty</h3>${Object.entries(diffs).map(([id,d])=>`<button data-arena="difficulty" data-id="${id}" class="${st.difficulty===id?"active":""}">${d.label}</button>`).join("")}</div></div>
       <div class="arena-summary"><h2>${e(games.find(x=>x.id===st.game).name)} · ${diffs[st.difficulty].label}</h2><p>Unlocked through level <b>${unlocked()}</b>. Finish Level 100 to unlock Endless.</p></div>
       <div class="level-grid">${Array.from({length:100},(_,i)=>i+1).map(n=>`<button data-arena="level" data-level="${n}" class="${n<=unlocked()?"open":"locked"} ${best()[n]?"cleared":""}" ${n>unlocked()?"disabled":""}>${n}<small>${best()[n]?"✓":""}</small></button>`).join("")}</div>
-      <button data-arena="level" data-level="${Math.max(101,unlocked())}" class="primary endless" ${unlocked()<101?"disabled":""}>∞ ENDLESS MODE</button>`);
+      <button data-arena="level" data-level="${Math.max(101,unlocked())}" class="primary endless" ${unlocked()<101?"disabled":""}>∞ ENDLESS MODE</button>
+      <div class="arena-summary"><span class="eyebrow">CLASSIC CIRCUIT</span><h2>Original 25-round challenge</h2><p>The original combined five-game run is still part of Journey.</p><button data-arena="classic" class="secondary">PLAY CLASSIC CHALLENGE →</button></div>`);
   }
   function play(level){
     st.level=level;st.puzzle=build(level);st.screen="play";st.startedAt=Date.now();save();renderPlay();
@@ -100,8 +101,8 @@
     ev.preventDefault();ev.stopImmediatePropagation();
     const a=b.dataset.arena;
     if(a==="open"){try{document.dispatchEvent(new KeyboardEvent("keydown",{key:"Escape"}));}catch{}st.screen="menu";save();menu();return}
-    if(a==="exit"){save();Promise.resolve(window.GFJAnonymousSave?.syncNow?.()).finally(()=>location.reload());return}
-    if(a==="menu"){st.screen="menu";save();menu();return}
+    if(a==="exit"){save();Promise.resolve(window.GFJAnonymousSave?.syncNow?.()).finally(()=>window.GFJClassic?.home?.());return}
+    if(a==="menu"){st.screen="menu";save();menu();return}\n    if(a==="classic"){save();window.GFJClassic?.trail?.();return}
     if(a==="game"){st.game=b.dataset.id;st.screen="menu";save();menu();return}
     if(a==="difficulty"){st.difficulty=b.dataset.id;st.screen="menu";save();menu();return}
     if(a==="level"){play(Number(b.dataset.level));return}
@@ -119,6 +120,12 @@
       }
     }
   },true);
-  function addNav(){const nav=document.querySelector("header nav");if(!nav||nav.querySelector("[data-arena='open']"))return;const b=document.createElement("button");b.textContent="100 Levels";b.dataset.arena="open";nav.insertBefore(b,nav.firstChild)}
-  addNav();new MutationObserver(addNav).observe(document.body,{childList:true,subtree:true});
+  window.GFJLevelArena = {
+    open() {
+      try { document.dispatchEvent(new KeyboardEvent("keydown",{key:"Escape"})); } catch {}
+      st.screen="menu";
+      save();
+      menu();
+    }
+  };
 })();

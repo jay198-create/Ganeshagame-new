@@ -21,13 +21,13 @@
   ];
 
   const decorCategories = [
-    ["Flower Garland","🌼"],["Marigold Toran","🌼"],["Mango Leaf Toran","🌿"],
-    ["Fairy Lights","✨"],["Deepam Row","🪔"],["Brass Bells","🔔"],
-    ["Rangoli","✥"],["Lotus Arrangement","🪷"],["Banana Stem","🌿"],
-    ["Kalash","🏺"],["Fabric Drapes","🎗️"],["Backdrop","🧵"],
-    ["Flower Pillar","🌸"],["Ceiling Hangings","🎊"],["Floor Lamps","🪔"],
-    ["Coconut Decor","🥥"],["Sugarcane Arch","🌾"],["Rice Sheaf","🌾"],
-    ["Peacock Accent","🦚"],["Umbrella Canopy","☂️"]
+    ["Flower Garland",""],["Marigold Toran",""],["Mango Leaf Toran",""],
+    ["Fairy Lights",""],["Deepam Row",""],["Brass Bells",""],
+    ["Rangoli",""],["Lotus Arrangement",""],["Banana Stem",""],
+    ["Kalash",""],["Fabric Drapes",""],["Backdrop",""],
+    ["Flower Pillar",""],["Ceiling Hangings",""],["Floor Lamps",""],
+    ["Coconut Decor",""],["Sugarcane Arch",""],["Rice Sheaf",""],
+    ["Peacock Accent",""],["Umbrella Canopy",""]
   ];
 
   const pujaItems = [

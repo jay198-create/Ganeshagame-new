@@ -215,14 +215,20 @@
     pause();
     view = next;
     if (next === "home") home();
-    else if (next === "trail") trail();
-    else if (next === "workshop") workshop();
+    else if (next === "trail") {
+      if (window.GFJLevelArena?.open) window.GFJLevelArena.open();
+      else trail();
+    }
+    else if (next === "workshop") {
+      if (window.GFJFestivalStudio?.open) window.GFJFestivalStudio.open();
+      else workshop();
+    }
     else if (next === "records") records();
   }
   function home() {
     const active = profile.active && !profile.active.finished;
     show(
-      `<section class="home-stage"><img class="home-backdrop" src="courtyard.png" alt="Moonlit Ganesh festival courtyard"><div class="home-shade"></div><div class="home-content"><div class="eyebrow"><span class="live-dot"></span> GANESH CHATURTHI FESTIVAL SIMULATOR</div><h1>BUILD.<br><em>PLAY.</em><br>CELEBRATE.</h1><p class="home-subtitle">100 Levels · Endless Mode · Your Own Festival</p><p class="home-description">Win Modaks in skill games. Choose your idol. Build the mandap.<br>Decorate, perform puja, celebrate the festival and complete Visarjan.</p><div class="home-actions"><button class="primary" data-arena="open">PLAY 100 LEVELS <span>↗</span></button><button class="secondary" data-v5="open">BUILD MY FESTIVAL</button>${button(active ? "continue" : "trail", active ? "RESUME CLASSIC CHALLENGE" : "CLASSIC 25-ROUND CHALLENGE", "text-button")}</div><div class="home-features"><span>05 MINI-GAMES</span><span>100 LEVELS + ENDLESS</span><span>131 IDOLS</span><span>120 MANDAPS</span><span>500 DECOR OPTIONS</span></div></div><div class="home-corner">${wallet()}<span>Earn. Build. Upgrade. Celebrate.</span></div><div class="home-caption"><span>FESTIVAL MODE</span><strong>From Agaman to Visarjan</strong></div></section><section class="home-lower"><div><span class="eyebrow">EVERY MODAK HAS A PURPOSE.</span><h2>Your score builds the festival.</h2></div><p>Spend Modaks on idols, mandaps, decorations and puja items.<br>Your festival progress and level progress can be restored with your recovery key.</p><button class="text-button" data-v5="open">OPEN FESTIVAL STUDIO ↗</button></section>${!storageOK ? '<p class="notice">Saving is unavailable in this browser. Progress lasts while this tab stays open.</p>' : ""}`,
+      `<section class="home-stage"><img class="home-backdrop" src="courtyard.png" alt="Moonlit Ganesh festival courtyard"><div class="home-shade"></div><div class="home-content"><div class="eyebrow"><span class="live-dot"></span> GANESH CHATURTHI FESTIVAL JOURNEY</div><h1>GANESHA'S<br><em>FESTIVAL</em><br>JOURNEY</h1><p class="home-subtitle">5 Games · 100 Levels Each · Endless Mode</p><p class="home-description">Play the same five festival games, progress through 100 levels in each,<br>earn Modaks and use them to build your own Ganesh Chaturthi celebration.</p><div class="home-actions">${button("trail", "ENTER THE JOURNEY <span>↗</span>")}${button("workshop", "MY FESTIVAL", "secondary")}${active ? button("continue", "RESUME ACTIVE CLASSIC RUN", "text-button") : ""}</div><div class="home-features"><span>05 FESTIVAL GAMES</span><span>100 LEVELS + ENDLESS</span><span>105 IDOLS</span><span>120 MANDAPS</span><span>500 DECOR OPTIONS</span></div></div><div class="home-corner">${wallet()}<span>Every Modak grows your festival.</span></div><div class="home-caption"><span>GANESH CHATURTHI</span><strong>Play · Build · Puja · Visarjan</strong></div></section><section class="home-lower"><div><span class="eyebrow">ONE GAME. ONE FESTIVAL.</span><h2>Play and build in the same journey.</h2></div><p>Journey contains all five games and their level progression. My Festival contains your idol, mandap, decorations, puja and Visarjan.</p>${button("workshop", "OPEN MY FESTIVAL ↗", "text-button")}</section>${!storageOK ? '<p class="notice">Saving is unavailable in this browser. Progress lasts while this tab stays open.</p>' : ""}`,
     );
   }
   function modeSelector() {
@@ -796,6 +802,7 @@
       ).catch(() => {});
     } catch {}
   }
+  window.GFJClassic = { home, trail, workshop, records };
   save();
   home();
   requestAnimationFrame(frame);

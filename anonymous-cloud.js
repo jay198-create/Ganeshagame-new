@@ -338,13 +338,12 @@
   (async () => {
     await loadRemoteBeforeGame();
     booted = true;
-    await loadScript("core.js?v=6");
-    await loadScript("festival-data.js?v=6");
-    await loadScript("idol-art.js?v=6");
-    await loadScript("festival-art.js?v=6");
-    await loadScript("game.js?v=6");
-    await loadScript("level-arena.js?v=6");
-    await loadScript("festival-studio.js?v=6");
+    await loadScript("core.js?v=7");
+    await loadScript("festival-data.js?v=7");
+    await loadScript("festival-art.js?v=7");
+    await loadScript("game.js?v=7");
+    await loadScript("level-arena.js?v=7");
+    await loadScript("festival-studio.js?v=7");
     addSaveButton();
     refreshWelcome();
     new MutationObserver(() => {

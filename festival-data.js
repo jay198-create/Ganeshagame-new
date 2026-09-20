@@ -97,7 +97,7 @@
 
   function pad(n){ return String(n).padStart(3,"0"); }
 
-  const idols = Array.from({length:131},(_,i)=>{
+  const idols = Array.from({length:105},(_,i)=>{
     const n=i+1;
     const sizes=[1,2,3,4,5];
     const styles=["Traditional","Eco clay","Royal","Lotus","Dancing","Scholar","Village","Temple","Floral","Gemstone"];

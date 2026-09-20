@@ -10,3 +10,33 @@
 @keyframes recall-shake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
 @media(max-width:520px){.recall-grid{gap:6px}.recall-grid button{min-height:44px;padding:3px}}
 @media(prefers-reduced-motion:reduce){.recall-grid .recall-wrong{animation:none}}
+
+/* Timed challenge system */
+.challenge-timer{margin:0 0 18px;padding:12px 14px;border:1px solid #d9b26b38;border-radius:10px;background:linear-gradient(180deg,#0e252b,#091a20);box-shadow:0 10px 24px #0003}
+.challenge-timer>div:first-child{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.challenge-timer span{font-size:10px;letter-spacing:1.8px;color:#aab9b6}
+.challenge-timer b{font-size:18px;color:#f2cd83;font-variant-numeric:tabular-nums}
+.timer-track{height:7px;border-radius:999px;background:#ffffff12;overflow:hidden}
+.timer-track i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#77c8ae,#e5bd71);transition:width .08s linear}
+.challenge-timer.warning b{color:#f0b65f}.challenge-timer.warning .timer-track i{background:linear-gradient(90deg,#e8c16d,#d48e3c)}
+.challenge-timer.danger b{color:#ef7f6f}.challenge-timer.danger .timer-track i{background:linear-gradient(90deg,#d26d55,#ef9b6c)}
+.timed-retry{margin:18px auto 0;display:block;min-width:180px}
+
+.hunt-context{margin-bottom:14px}
+.hunt-context p{margin:5px 0 0;color:var(--muted);font-size:12px}
+.hunt-grid button{display:grid;place-items:center;min-height:68px;background:radial-gradient(circle at 50% 35%,#17343b,#0b2026 68%);border:1px solid #d5b36a25;transition:transform .12s ease,border-color .12s ease,box-shadow .12s ease}
+.hunt-grid button:hover:not(:disabled){transform:translateY(-2px);border-color:#e1bd6a66;box-shadow:0 8px 18px #0004}
+.hunt-symbol{width:40px;height:40px;fill:#8ba39e;stroke:#8ba39e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.hunt-symbol .line,.hunt-symbol .tail{fill:none}
+.hunt-symbol .accent{fill:#cf9c47;stroke:#cf9c47}
+.hunt-symbol.target{width:46px;height:46px;fill:#e0b565;stroke:#e0b565;filter:drop-shadow(0 0 8px #e0b56555)}
+.hunt-symbol.target .eye{fill:#08171d;stroke:none}
+.hunt-symbol.target .tail{stroke:#e0b565;stroke-width:3;fill:none}
+.hunt-grid button:disabled{opacity:.55}
+
+@media(max-width:700px){
+  .challenge-timer{padding:10px 12px}
+  .hunt-grid button{min-height:58px}
+  .hunt-symbol{width:33px;height:33px}
+  .hunt-symbol.target{width:38px;height:38px}
+}

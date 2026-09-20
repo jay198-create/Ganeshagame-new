@@ -7,7 +7,7 @@
     version:5, groupName:"Our Ganesh Mandal", chanda:0, duration:3, day:1,
     ownedIdols:[], selectedIdol:null, ownedMandaps:[], selectedMandap:null,
     ownedDecor:[], activeDecor:[], ownedPuja:[], mantraLearned:[], dailyPuja:{},
-    processionStep:0, visarjanComplete:false, view:"setup", page:0, filter:"all"
+    processionStep:0, visarjanComplete:false, view:"setup", page:0, filter:"all", mantraGroup:"all"
   });
   let state=defaultState();
   try{ state={...state,...JSON.parse(localStorage.getItem(KEY)||"{}")}; }catch{}
@@ -99,15 +99,26 @@
   }
 
   function renderPuja(){
-    return `<div class="v5-title"><span class="eyebrow">PUJA STORE</span><h2>Prepare today's puja</h2><p>Purchase offerings and ritual items with modaks, then use them in the daily puja checklist.</p></div>
-      <div class="decor-grid">${D.pujaItems.map(x=>`<article class="decor-card"><div class="decor-thumb">${A?.pujaSvg ? A.pujaSvg(x) : `<span>${x.icon}</span>`}</div><div><b>${e(x.name)}</b><small>${money(x.price)}</small></div>
-      ${state.ownedPuja.includes(x.id)?'<em>Owned</em>':`<button data-v5="buy-puja" data-id="${x.id}">Buy</button>`}</article>`).join("")}</div>`;
+    return `<div class="v5-title"><span class="eyebrow">PUJA COLLECTION · ${D.pujaItems.length} ITEMS</span><h2>Prepare the worship space</h2><p>Detailed ritual objects replace emoji placeholders. Items shown here are common offerings and accessories; family and temple traditions vary.</p></div>
+      <div class="puja-grid">${D.pujaItems.map(x=>`<article class="puja-card ${state.ownedPuja.includes(x.id)?"owned":""}">
+        <div class="puja-visual">${A?.pujaSvg ? A.pujaSvg(x) : ""}</div>
+        <div class="puja-copy"><span class="eyebrow">RITUAL ITEM</span><h3>${e(x.name)}</h3><p>${e(x.ritualUse||"Traditional puja item.")}</p><b>${money(x.price)}</b></div>
+        ${state.ownedPuja.includes(x.id)?'<em>OWNED</em>':`<button data-v5="buy-puja" data-id="${x.id}" class="primary">ADD TO PUJA</button>`}
+      </article>`).join("")}</div>`;
   }
 
   function renderMantras(){
-    return `<div class="v5-title"><span class="eyebrow">LEARN DURING PUJA</span><h2>Mantra library</h2><p>Read, pronounce, understand and mark each prayer as learned.</p></div>
-      <div class="mantra-list">${D.mantras.map(x=>`<article class="v5-card mantra"><span class="eyebrow">${e(x.type)}</span><h3>${e(x.title)}</h3><div class="devanagari">${e(x.devanagari)}</div><p><b>Pronunciation</b><br>${e(x.simple)}</p><p><b>Meaning</b><br>${e(x.meaning)}</p><small>${e(x.source)}</small>
-      <button data-v5="learn-mantra" data-id="${x.id}" class="${state.mantraLearned.includes(x.id)?"secondary":"primary"}">${state.mantraLearned.includes(x.id)?"✓ LEARNED":"MARK AS LEARNED"}</button></article>`).join("")}</div>`;
+    const groups=["all",...new Set(D.mantras.map(x=>x.collection||"Other"))];
+    const rows=state.mantraGroup==="all"?D.mantras:D.mantras.filter(x=>(x.collection||"Other")===state.mantraGroup);
+    return `<div class="v5-title"><span class="eyebrow">${D.mantras.length} LEARNING PASSAGES</span><h2>Ganapati mantra & shloka library</h2><p>Common prayers, Vedic material, Sankata Nashana, Ganesha Pancharatnam, Ganapati Atharvashirsha and the complete 11-part Sri Ganapati Talam learning set.</p></div>
+      <div class="mantra-toolbar"><label>Collection<select id="mantra-filter">${groups.map(g=>`<option value="${e(g)}" ${state.mantraGroup===g?"selected":""}>${g==="all"?"All collections":e(g)}</option>`).join("")}</select></label><span>${rows.length} shown · ${state.mantraLearned.length} learned</span></div>
+      <div class="mantra-list">${rows.map(x=>`<article class="v5-card mantra">
+        <div class="mantra-head"><div><span class="eyebrow">${e(x.collection||x.type)}</span><h3>${e(x.title)}</h3></div><span class="mantra-script">${e(x.script||"Devanagari")}</span></div>
+        ${x.devanagari?`<div class="devanagari">${e(x.devanagari)}</div>`:""}
+        <div class="mantra-roman">${e(x.transliteration||x.simple||"")}</div>
+        <p><b>Meaning</b><br>${e(x.meaning)}</p><small>${e(x.type)} · ${e(x.source)}</small>
+        <button data-v5="learn-mantra" data-id="${x.id}" class="${state.mantraLearned.includes(x.id)?"secondary":"primary"}">${state.mantraLearned.includes(x.id)?"✓ LEARNED":"MARK AS LEARNED"}</button>
+      </article>`).join("")}</div>`;
   }
 
   function renderFestival(){
@@ -163,7 +174,7 @@
   },true);
 
   document.addEventListener("change",ev=>{
-    if(ev.target.id==="decor-filter"){state.filter=ev.target.value;state.page=0;save();render();}
+    if(ev.target.id==="decor-filter"){state.filter=ev.target.value;state.page=0;save();render();}\n    if(ev.target.id==="mantra-filter"){state.mantraGroup=ev.target.value;save();render();}
     if(ev.target.matches("[data-v5-check]")){const key="day-"+state.day,arr=state.dailyPuja[key]||[],i=Number(ev.target.dataset.v5Check); if(ev.target.checked&&!arr.includes(i))arr.push(i);if(!ev.target.checked&&arr.includes(i))arr.splice(arr.indexOf(i),1);state.dailyPuja[key]=arr;save();render();}
   });
 

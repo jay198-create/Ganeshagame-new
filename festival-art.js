@@ -231,65 +231,77 @@
 
 
   function pujaScene(day=1, mantraTitle="Ganesh Puja"){
-    const n=Math.max(1,Number(day)||1), accent=["#ffd25f","#f09f7d","#86d6bd","#e9a6c0"][n%4];
-    return `<svg class="ritual-art" viewBox="0 0 520 260" role="img" aria-label="Daily Ganesh puja scene">
+    const n=Math.max(1,Number(day)||1), accent=["#d9a34d","#b98c55","#c8b07a","#a97a45"][n%4];
+    return `<svg class="ritual-art" viewBox="0 0 620 300" role="img" aria-label="Traditional Ganesh puja altar">
       <defs>
-        <radialGradient id="pujaGlow${n}"><stop stop-color="${accent}" stop-opacity=".4"/><stop offset="1" stop-color="#07181d" stop-opacity="0"/></radialGradient>
-        <linearGradient id="altar${n}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9b5a2c"/><stop offset="1" stop-color="#52281d"/></linearGradient>
+        <linearGradient id="altarStone${n}" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#14282d"/><stop offset="1" stop-color="#071418"/></linearGradient>
+        <linearGradient id="ritualBrass${n}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6b3e17"/><stop offset=".28" stop-color="#f0c46a"/><stop offset=".55" stop-color="#9d641f"/><stop offset=".78" stop-color="#ffe2a4"/><stop offset="1" stop-color="#6c401a"/></linearGradient>
+        <radialGradient id="ritualGlow${n}"><stop stop-color="#efc36a" stop-opacity=".42"/><stop offset="1" stop-color="#efc36a" stop-opacity="0"/></radialGradient>
+        <filter id="ritualShadow${n}" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="7" stdDeviation="7" flood-color="#000" flood-opacity=".6"/></filter>
       </defs>
-      <rect width="520" height="260" rx="18" fill="#08191f"/>
-      <circle cx="260" cy="115" r="135" fill="url(#pujaGlow${n})"/>
-      <path d="M70 210 Q260 185 450 210 L450 245 L70 245Z" fill="#6e452f" opacity=".7"/>
-      <rect x="165" y="160" width="190" height="55" rx="10" fill="url(#altar${n})" stroke="#d8a75b" stroke-width="2"/>
-      <rect x="205" y="145" width="110" height="22" rx="7" fill="#d29a45" stroke="#ffe0a2" stroke-width="2"/>
-      <g transform="translate(260 119)">
-        <circle cx="0" cy="-24" r="23" fill="#e1a873"/>
-        <ellipse cx="-24" cy="-24" rx="15" ry="25" fill="#e7b584"/>
-        <ellipse cx="24" cy="-24" rx="15" ry="25" fill="#e7b584"/>
-        <path d="M4 -12 Q28 7 7 30 Q-4 33 -5 18 Q11 12 4-12" fill="#dda46e"/>
-        <ellipse cx="0" cy="24" rx="30" ry="33" fill="#c74736"/>
-        <path d="M-15 -45 Q0 -72 15 -45Z" fill="#d4a538" stroke="#ffe49a" stroke-width="2"/>
-        <circle cx="-8" cy="-27" r="2.8" fill="#1c2225"/><circle cx="8" cy="-27" r="2.8" fill="#1c2225"/>
+      <rect width="620" height="300" rx="18" fill="url(#altarStone${n})"/>
+      <circle cx="310" cy="124" r="155" fill="url(#ritualGlow${n})"/>
+      <path d="M112 208 Q130 72 310 54 Q490 72 508 208" fill="none" stroke="#a6793f" stroke-width="7" opacity=".75"/>
+      <path d="M143 205 Q165 96 310 78 Q455 96 477 205" fill="none" stroke="#d5ae67" stroke-width="2.2" opacity=".55"/>
+      <path d="M150 210 H470 V251 H150Z" fill="#3d2d24" stroke="#8b6338" stroke-width="2"/>
+      <path d="M196 194 H424 V218 H196Z" fill="url(#ritualBrass${n})" stroke="#ffe1a0" stroke-width="1.5"/>
+      <g transform="translate(310 142)" filter="url(#ritualShadow${n})">
+        <path d="M0 -62 C-24 -58 -40 -40 -38 -14 C-38 7 -24 19 -11 27 C-18 43 -17 64 -8 77 C-4 83 4 83 8 77 C17 64 18 43 11 27 C24 19 38 7 38 -14 C40 -40 24 -58 0 -62Z" fill="url(#ritualBrass${n})" stroke="#ffe2a3" stroke-width="1.6"/>
+        <ellipse cx="-34" cy="-18" rx="17" ry="26" fill="#b97b2d" stroke="#f1c979"/>
+        <ellipse cx="34" cy="-18" rx="17" ry="26" fill="#b97b2d" stroke="#f1c979"/>
+        <path d="M2 -4 C20 4 25 23 14 34 C7 40 2 45 4 58" fill="none" stroke="#f3c974" stroke-width="9" stroke-linecap="round"/>
+        <path d="M-18 -55 L0 -82 L18 -55" fill="#8f5c20" stroke="#ffe19f" stroke-width="2"/>
+        <circle cx="-10" cy="-24" r="2.8" fill="#1c1712"/><circle cx="10" cy="-24" r="2.8" fill="#1c1712"/>
+        <path d="M-10 74 Q0 84 10 74" stroke="#6b421c" stroke-width="3" fill="none"/>
       </g>
-      ${[125,395].map(x=>`<g transform="translate(${x} 165)"><path d="M0 25 q15 10 30 0 q-5 20-15 20t-15-20" fill="#b96c2a"/><path d="M15 20 q-8-16 0-26 q10 11 0 26" fill="#ffd95b"/></g>`).join("")}
-      <g transform="translate(113 188)">${rosette(0,0,26,9,"#df5c67","#ffd67c")}</g>
-      <g transform="translate(406 188)">${rosette(0,0,26,9,"#f1a81d","#ffe094")}</g>
-      <path d="M198 224 Q260 197 322 224" fill="none" stroke="#f4cb73" stroke-width="3" stroke-dasharray="3 6"/>
-      <text x="260" y="34" text-anchor="middle" fill="#efd59a" font-family="Georgia,serif" font-size="14">${esc(mantraTitle)}</text>
-      <text x="260" y="54" text-anchor="middle" fill="#8fb3ad" font-family="Arial,sans-serif" font-size="10">DAY ${n} · PUJA & LEARNING</text>
+      <g filter="url(#ritualShadow${n})">
+        <path d="M88 224 Q112 244 136 224 Q132 253 112 257 Q92 253 88 224Z" fill="url(#ritualBrass${n})"/>
+        <path d="M112 219 Q100 196 112 180 Q126 197 112 219" fill="#f3b43c"/><path d="M112 211 Q106 198 113 190" stroke="#fff0b1" stroke-width="4"/>
+        <path d="M484 224 Q508 244 532 224 Q528 253 508 257 Q488 253 484 224Z" fill="url(#ritualBrass${n})"/>
+        <path d="M508 219 Q496 196 508 180 Q522 197 508 219" fill="#f3b43c"/><path d="M508 211 Q502 198 509 190" stroke="#fff0b1" stroke-width="4"/>
+        <ellipse cx="210" cy="244" rx="45" ry="13" fill="url(#ritualBrass${n})"/><circle cx="198" cy="239" r="9" fill="#b81f32"/><circle cx="219" cy="239" r="8" fill="#dd9a28"/>
+        <ellipse cx="410" cy="244" rx="45" ry="13" fill="url(#ritualBrass${n})"/><path d="M390 241 Q402 218 414 241 Q402 253 390 241Z" fill="#e3ba61"/><path d="M410 241 Q423 214 436 241 Q423 254 410 241Z" fill="#efc86f"/>
+      </g>
+      <g opacity=".55"><path d="M69 206 Q51 168 78 141 Q92 124 80 101" fill="none" stroke="#d9dfdc" stroke-width="2.5"/><path d="M551 206 Q569 168 542 141 Q528 124 540 101" fill="none" stroke="#d9dfdc" stroke-width="2.5"/></g>
+      <text x="310" y="27" text-anchor="middle" fill="#e9d4a2" font-family="Georgia,serif" font-size="15">${esc(mantraTitle)}</text>
+      <text x="310" y="45" text-anchor="middle" fill="#8ea6a3" font-family="Arial,sans-serif" font-size="9" letter-spacing="2">DAY ${n} · DAILY PUJA</text>
     </svg>`;
   }
 
   function processionSvg(step=0, complete=false){
-    const s=clamp(Number(step)||0,0,6);
-    const water = s>=4;
-    const farewell = complete || s>=6;
-    return `<svg class="procession-art" viewBox="0 0 620 280" role="img" aria-label="Ganesh festival procession and visarjan scene">
+    const s=clamp(Number(step)||0,0,6), water=s>=4, farewell=complete||s>=6;
+    const x=165+s*46;
+    return `<svg class="procession-art" viewBox="0 0 680 310" role="img" aria-label="Ganesh festival procession and visarjan">
       <defs>
-        <linearGradient id="skyProc" x1="0" y1="0" x2="0" y2="1"><stop stop-color="${water?"#122e4c":"#182c39"}"/><stop offset="1" stop-color="#09171d"/></linearGradient>
-        <radialGradient id="moonProc"><stop stop-color="#fff1bd"/><stop offset="1" stop-color="#fff1bd" stop-opacity="0"/></radialGradient>
+        <linearGradient id="procSky${s}" x1="0" y1="0" x2="0" y2="1"><stop stop-color="${water?"#142e45":"#1d2b34"}"/><stop offset="1" stop-color="#071419"/></linearGradient>
+        <linearGradient id="procGold${s}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#674018"/><stop offset=".3" stop-color="#efbd60"/><stop offset=".6" stop-color="#8e571c"/><stop offset=".82" stop-color="#ffe2a1"/><stop offset="1" stop-color="#5a3515"/></linearGradient>
+        <radialGradient id="procGlow${s}"><stop stop-color="#f0c46a" stop-opacity=".32"/><stop offset="1" stop-color="#f0c46a" stop-opacity="0"/></radialGradient>
+        <filter id="procShadow${s}" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#000" flood-opacity=".65"/></filter>
       </defs>
-      <rect width="620" height="280" rx="18" fill="url(#skyProc)"/>
-      <circle cx="505" cy="55" r="52" fill="url(#moonProc)"/><circle cx="505" cy="55" r="18" fill="#fff0bd"/>
-      <path d="M0 170 L70 120 116 156 177 94 241 156 312 115 375 162 443 108 515 155 570 119 620 150 V215 H0Z" fill="#102a2e"/>
-      ${water?'<path d="M0 208 Q90 188 180 208 T360 208 T540 208 T720 208 V280 H0Z" fill="#154b65"/><path d="M0 226 Q85 208 170 226 T340 226 T510 226 T680 226" fill="none" stroke="#7fc6d4" stroke-opacity=".45" stroke-width="3"/>':'<path d="M0 218 L620 190 V280 H0Z" fill="#4a3529"/><path d="M0 237 L620 210" stroke="#d6a55d" stroke-opacity=".3" stroke-width="3"/>'}
-      <g transform="translate(${135+s*48} ${water?151:165})">
-        <rect x="-48" y="40" width="96" height="18" rx="5" fill="#c88d34"/>
-        <circle cx="-35" cy="61" r="8" fill="#1d2426"/><circle cx="35" cy="61" r="8" fill="#1d2426"/>
-        <g transform="translate(0 8)" opacity="${farewell ? .72 : 1}">
-          <circle cy="-18" r="17" fill="#e1a873"/><ellipse cx="-19" cy="-18" rx="12" ry="19" fill="#e8b682"/><ellipse cx="19" cy="-18" rx="12" ry="19" fill="#e8b682"/>
-          <path d="M3 -8 Q20 5 5 23 Q-3 24-4 13 Q8 9 3-8" fill="#dca16b"/><ellipse cy="18" rx="23" ry="27" fill="#d14d38"/>
-          <path d="M-11 -34 Q0 -55 11 -34Z" fill="#d4a538" stroke="#ffe49a" stroke-width="1.5"/>
+      <rect width="680" height="310" rx="18" fill="url(#procSky${s})"/>
+      <circle cx="555" cy="57" r="63" fill="url(#procGlow${s})"/><circle cx="555" cy="57" r="19" fill="#f5e7bd"/>
+      <path d="M0 186 L70 127 125 168 185 107 245 170 319 119 385 171 458 112 528 167 592 126 680 171 V222 H0Z" fill="#10272d"/>
+      <path d="M0 203 Q105 170 210 203 T420 203 T630 203 T840 203 V237 H0Z" fill="#0b2026" opacity=".92"/>
+      ${water?'<path d="M0 233 Q95 211 190 233 T380 233 T570 233 T760 233 V310 H0Z" fill="#164e65"/><path d="M0 252 Q90 232 180 252 T360 252 T540 252 T720 252" fill="none" stroke="#91c9d0" stroke-opacity=".42" stroke-width="3"/>':'<path d="M0 244 L680 211 V310 H0Z" fill="#4a3629"/><path d="M0 263 L680 229" stroke="#c99d5c" stroke-opacity=".28" stroke-width="3"/>'}
+      <g transform="translate(${x} ${water?170:185})" filter="url(#procShadow${s})" opacity="${farewell?.68:1}">
+        <path d="M-70 30 H70 L61 62 H-61Z" fill="#7b4b24" stroke="#d9a55a" stroke-width="2"/>
+        <circle cx="-48" cy="65" r="10" fill="#17191a"/><circle cx="48" cy="65" r="10" fill="#17191a"/>
+        <path d="M-62 15 Q0 -56 62 15" fill="none" stroke="url(#procGold${s})" stroke-width="8"/>
+        <path d="M-48 17 Q0 -37 48 17" fill="none" stroke="#e1b867" stroke-width="2.5"/>
+        <g transform="translate(0 -2)">
+          <path d="M0 -42 C-18 -39 -29 -25 -28 -7 C-28 8 -19 17 -9 22 C-13 35 -11 49 -5 58 C-2 62 3 62 6 58 C12 49 14 35 9 22 C19 17 28 8 28 -7 C29 -25 18 -39 0 -42Z" fill="url(#procGold${s})" stroke="#ffe0a0"/>
+          <ellipse cx="-25" cy="-9" rx="12" ry="18" fill="#b97a2e"/><ellipse cx="25" cy="-9" rx="12" ry="18" fill="#b97a2e"/>
+          <path d="M2 2 Q18 9 10 23 Q2 31 4 42" fill="none" stroke="#f0c36c" stroke-width="7" stroke-linecap="round"/>
+          <path d="M-12 -38 L0 -57 L12 -38" fill="#8d571e" stroke="#ffe19e"/>
         </g>
       </g>
-      ${Array.from({length:14},(_,i)=>{
-        const x=30+i*40+(i%3)*5, y=212-(i%4)*8;
-        return `<g transform="translate(${x} ${y})"><circle cy="-23" r="7" fill="#9a6b4d"/><path d="M-8 -15 L8 -15 L12 17 L-12 17Z" fill="${["#b63a38","#d69326","#377f72","#7356a3"][i%4]}"/><path d="M-5 17 v17 M5 17 v17" stroke="#5c493c" stroke-width="4"/></g>`;
-      }).join("")}
-      <g transform="translate(72 201)"><circle cx="0" cy="0" r="17" fill="#c8893a"/><circle cx="0" cy="0" r="11" fill="#5e321e"/><path d="M-23 -9 L23 9 M-23 9 L23 -9" stroke="#f0c26e" stroke-width="3"/></g>
-      ${Array.from({length:9},(_,i)=>`<circle cx="${35+i*66}" cy="${68+(i%3)*13}" r="${2+(i%2)}" fill="${i%2?"#ffd65d":"#ef7e8f"}" opacity=".8"/>`).join("")}
-      <text x="24" y="34" fill="#f0d59d" font-family="Georgia,serif" font-size="17">${farewell?"Visarjan · Until next year":"Ganpati Bappa Morya"}</text>
-      <text x="24" y="54" fill="#8fb3ad" font-family="Arial,sans-serif" font-size="10">PROCESSION STEP ${s+1} OF 7</text>
+      <g fill="#101619" opacity=".95">
+        ${Array.from({length:16},(_,i)=>{const px=32+i*39, py=232-(i%3)*8; return `<path d="M${px-7} ${py} Q${px} ${py-30} ${px+7} ${py} L${px+10} ${py+34} H${px-10}Z"/><circle cx="${px}" cy="${py-37}" r="7"/>`;}).join("")}
+      </g>
+      <g transform="translate(74 220)" filter="url(#procShadow${s})"><ellipse cx="0" cy="0" rx="25" ry="16" fill="#8d5625" stroke="#dbac66" stroke-width="2"/><ellipse cx="0" cy="0" rx="14" ry="9" fill="#43291a"/><path d="M-32 -14 L32 14 M-32 14 L32 -14" stroke="#e1b665" stroke-width="3"/></g>
+      <g opacity=".85">${Array.from({length:12},(_,i)=>`<circle cx="${30+i*55}" cy="${77+(i%3)*11}" r="${2.2+(i%2)}" fill="${i%2?"#f1bf5f":"#d66d75"}"/>`).join("")}</g>
+      <text x="26" y="34" fill="#ead5a1" font-family="Georgia,serif" font-size="18">${farewell?"Visarjan · Until next year":"Ganpati Bappa Morya"}</text>
+      <text x="26" y="53" fill="#8ea6a3" font-family="Arial,sans-serif" font-size="9" letter-spacing="2">PROCESSION · STEP ${s+1} OF 7</text>
     </svg>`;
   }
 

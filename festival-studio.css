@@ -49,3 +49,20 @@
 
 @media(max-width:1050px){.puja-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.puja-grid,.mantra-list{grid-template-columns:1fr}.mantra-toolbar{align-items:stretch;flex-direction:column}.puja-visual{height:210px}}
+
+.asset-box .idol-art,.scene-idol .idol-art{display:block;width:100%;height:100%;max-width:100%;overflow:hidden}.asset-box{overflow:hidden}.scene-idol{overflow:hidden}
+
+/* A restrained gallery presentation using the supplied rendered artwork. */
+.festival-atmosphere{position:relative;min-height:240px;border:1px solid #b7945b55;border-radius:16px;overflow:hidden;margin:0 0 28px;display:flex;align-items:end;background:#071015}
+.festival-atmosphere>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 42%;opacity:.62}
+.festival-atmosphere:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#071015ee,#07101588 50%,transparent)}
+.festival-atmosphere>div{position:relative;z-index:1;padding:32px;max-width:580px}.festival-atmosphere h2{font:clamp(30px,4vw,52px) var(--serif);margin:10px 0}.festival-atmosphere p{color:#e7ded0}
+.v5-shell{--gold:#d5b47b;--mint:#8bb9a9}.v5-tabs button{border-radius:6px;letter-spacing:.04em}.v5-tabs button.active{background:#d5b47b16;box-shadow:inset 0 -2px #d5b47b}
+.v5-card,.shop-card,.decor-card,.puja-card{background:linear-gradient(150deg,#192b31,#0b171e);border-color:#b49a6f33;box-shadow:0 12px 30px #0003;border-radius:12px}
+.shop-card{padding:12px;gap:12px;transition:transform .2s,border-color .2s}.shop-card:hover{transform:translateY(-3px);border-color:#d5b47b88}.shop-card.selected{border-color:#d5b47b;box-shadow:0 0 0 1px #d5b47b44,0 16px 36px #0006}
+.asset-box{height:260px;background:radial-gradient(ellipse at 50% 35%,#423c2d,#0a1218 74%);border:1px solid #d5b47b33;border-radius:8px}.asset-box .idol-art{filter:drop-shadow(0 10px 10px #0008)}
+.shop-card h3{font:22px var(--serif)}.shop-card p{font-size:12px;line-height:1.6}.shop-card>b{font-size:11px;letter-spacing:.1em}.shop-card button{margin-top:auto}
+.preview-card{padding:12px}.preview-card .festival-scene-art{min-height:420px;background:radial-gradient(ellipse at 50% 40%,#66502b55,transparent 60%),linear-gradient(#111d28,#060d12);box-shadow:inset 0 0 60px #0008}
+.scene-idol{filter:drop-shadow(0 10px 12px #000a)}.v5-top h1{font-size:clamp(34px,5vw,64px)}
+@media(max-width:600px){.festival-atmosphere{min-height:190px}.festival-atmosphere>div{padding:22px}.asset-box{height:220px}.preview-card .festival-scene-art{min-height:290px}}
+@media(prefers-reduced-motion:reduce){.shop-card{transition:none}.shop-card:hover{transform:none}}

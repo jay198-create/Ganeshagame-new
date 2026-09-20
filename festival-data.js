@@ -786,7 +786,7 @@
     return {
       id:`idol-${pad(n)}`,
       name:`Ganesha Idol ${pad(n)}`,
-      image:`assets/idols/idol_${pad(n)}.png`,
+      image:`assets/idols/${window.GFJIdolRegions?.[i]?.file || "individuals.webp"}`,
       sizeFt:sizes[i%sizes.length],
       style:styles[i%styles.length],
       color:colors[(i*3)%colors.length],

@@ -218,12 +218,18 @@
     return `<svg class="puja-art" viewBox="0 0 160 130" role="img" aria-label="${esc(item.name)}">${frame}${art}<path d="M18 116 H142" stroke="#e7ba7040" stroke-width="1"/></svg>`;
   }
 
+  function idolHtml(idol) {
+    const index=Number(String(idol.id).replace("idol-",""))-1;
+    const r=window.GFJIdolRegions?.[index];
+    if(!r)return '<span class="scene-idol-fallback">ॐ</span>';
+    return `<svg class="idol-art" viewBox="${r.box.join(' ')}" role="img" aria-label="${esc(idol.name)}" preserveAspectRatio="xMidYMid meet"><image href="assets/idols/${r.file}" width="${r.size[0]}" height="${r.size[1]}"/></svg>`;
+  }
   function scene(mandap,idol,decorations=[]){
     const m = mandap || {id:"mandap-preview",name:"Festival Mandap",primary:"#c58a35",secondary:"#173e39",architecture:"Temple Arch",roof:"arch",pillars:4,pattern:1};
     const dec = decorations.slice(0,10);
     return `<div class="festival-scene-art">
       <div class="scene-mandap">${mandapSvg(m,{large:true})}</div>
-      <div class="scene-idol">${idol? `<img src="${esc(idol.image)}" alt="${esc(idol.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="scene-idol-fallback">ॐ</span>` : '<span class="scene-idol-fallback">ॐ</span>'}</div>
+      <div class="scene-idol">${idol? idolHtml(idol) : '<span class="scene-idol-fallback">ॐ</span>'}</div>
       <div class="scene-decorations">${dec.map((d,i)=>`<span class="scene-decor scene-decor-${i}">${decorSvg(d)}</span>`).join("")}</div>
       <div class="scene-floor-glow"></div>
     </div>`;
@@ -321,5 +327,5 @@
     </svg>`;
   }
 
-  window.GFJArt={mandapSvg,decorSvg,pujaSvg,scene,pujaScene,processionSvg,festivalDaySvg};
+  window.GFJArt={idolHtml,mandapSvg,decorSvg,pujaSvg,scene,pujaScene,processionSvg,festivalDaySvg};
 })();

@@ -93,14 +93,23 @@
   }
 
   async function request(method, key, state) {
-    const response = await fetch("/api/save", {
-      method,
-      headers: {
-        "content-type": "application/json",
-        "x-recovery-key": key
-      },
-      body: state ? JSON.stringify({ state }) : undefined
-    });
+    const controller = new AbortController();
+    let timeout;
+    let response;
+    try {
+      response = await Promise.race([
+        fetch("/api/save", {
+          method,
+          headers: { "content-type": "application/json", "x-recovery-key": key },
+          body: state ? JSON.stringify({ state }) : undefined,
+          signal: controller.signal
+        }),
+        new Promise((_, reject) => {
+          timeout = setTimeout(() => { controller.abort(); reject(new Error("Cloud save timed out.")); }, 4000);
+        })
+      ]);
+    } finally { clearTimeout(timeout); }
+
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error || "Save service unavailable.");
     return data;
@@ -136,8 +145,8 @@
   };
 
   async function loadRemoteBeforeGame() {
-    const key = getRecoveryKey();
     try {
+      const key = getRecoveryKey();
       const remote = await request("GET", key);
       if (remote.found && remote.state) {
         const localUpdated = Number(localStorage.getItem(LOCAL_UPDATED_KEY) || 0);
@@ -321,15 +330,21 @@
     });
   }
 
+  function showLoadError() {
+    const app = document.querySelector("#app");
+    app.innerHTML = '<section class="loading-message"><h2>Let’s try loading again</h2><p>A game file could not load. Check your connection and retry. Your saved progress has not been cleared.</p><button id="retry-game" class="primary">RETRY LOADING</button></section>';
+    document.querySelector("#retry-game").onclick = () => location.reload();
+  }
   (async () => {
     await loadRemoteBeforeGame();
     booted = true;
-    await loadScript("core.js?v=5");
-    await loadScript("festival-data.js?v=5");
-    await loadScript("festival-art.js?v=5");
-    await loadScript("game.js?v=5");
-    await loadScript("level-arena.js?v=5");
-    await loadScript("festival-studio.js?v=5");
+    await loadScript("core.js?v=6");
+    await loadScript("festival-data.js?v=6");
+    await loadScript("idol-art.js?v=6");
+    await loadScript("festival-art.js?v=6");
+    await loadScript("game.js?v=6");
+    await loadScript("level-arena.js?v=6");
+    await loadScript("festival-studio.js?v=6");
     addSaveButton();
     refreshWelcome();
     new MutationObserver(() => {
@@ -351,5 +366,5 @@
         });
       } catch {}
     });
-  })();
+  })().catch(showLoadError);
 })();

@@ -4,13 +4,14 @@
   if(!D||!app) return;
 
   const defaultState=()=>({
-    version:5, groupName:"Our Ganesh Mandal", chanda:0, duration:3, day:1,
+    version:5, completedDays:[], groupName:"Our Ganesh Mandal", chanda:0, duration:3, day:1,
     ownedIdols:[], selectedIdol:null, ownedMandaps:[], selectedMandap:null,
     ownedDecor:[], activeDecor:[], ownedPuja:[], mantraLearned:[], dailyPuja:{},
     processionStep:0, visarjanComplete:false, view:"setup", page:0, filter:"all", mantraGroup:"all"
   });
   let state=defaultState();
   try{ state={...state,...JSON.parse(localStorage.getItem(KEY)||"{}")}; }catch{}
+  if (!Array.isArray(state.completedDays)) state.completedDays = [];
   const profile=()=>{ try{return JSON.parse(localStorage.getItem(PROFILE_KEY)||"{}")}catch{return {coins:0}} };
   const setProfile=(p)=>localStorage.setItem(PROFILE_KEY,JSON.stringify(p));
   const save=()=>localStorage.setItem(KEY,JSON.stringify(state));
@@ -22,7 +23,7 @@
   const earn=(n)=>{ const p=profile(); p.coins=Math.max(0,Number(p.coins)||0)+n; setProfile(p); };
 
   const e=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-  const money=n=>`${n} 🥟`;
+  const money=n=>`${n} MODAKS`;
   const wallet=()=>`<div class="v5-wallet"><b>${coins()}</b><span>MODAKS</span></div>`;
   const shell=(body)=>`<section class="v5-shell">
     <div class="v5-top"><div><span class="eyebrow">MY FESTIVAL</span><h1>Build your celebration.</h1></div>${wallet()}</div>
@@ -32,6 +33,7 @@
         ["puja","Puja"],["mantras","Mantras"],["festival","Festival days"],["procession","Visarjan"]
       ].map(([id,label])=>`<button data-v5="tab" data-id="${id}" class="${state.view===id?"active":""}">${label}</button>`).join("")}
     </div>
+    <div class="festival-atmosphere"><img src="courtyard.png" alt="Moonlit festival mandap" decoding="async"><div><span class="eyebrow">YOUR CELEBRATION, YOUR CREATION</span><h2>The Mandal Collection</h2><p>Curate your idol. Build your mandap. Bring the festival to life.</p></div></div>
     <div class="v5-content">${body}</div>
     <div class="v5-footer"><button data-v5="back-game" class="secondary">← Back to game</button><small>Recovery-key cloud memory enabled. Player name is optional; no account, email, password, phone number or student ID is requested.</small></div>
   </section>`;
@@ -67,9 +69,9 @@
 
   function renderIdols(){
     const per=12, pages=Math.ceil(D.idols.length/per), page=Math.min(state.page,pages-1), rows=D.idols.slice(page*per,page*per+per);
-    return `<div class="v5-title"><div><span class="eyebrow">105 INDIVIDUAL DESIGNS</span><h2>Choose your Ganesha idol</h2><p>Different sizes, styles and budgets. Buy once, then switch between owned idols freely.</p></div></div>
+    return `<div class="v5-title"><div><span class="eyebrow">105 IDOL CHOICES</span><h2>Choose your Ganesha idol</h2><p>Different sizes, styles and budgets. Buy once, then switch between owned idols freely.</p></div></div>
       <div class="v5-catalog">${rows.map(x=>`<article class="shop-card ${state.selectedIdol===x.id?"selected":""}">
-        <div class="asset-box"><img src="${x.image}" alt="${e(x.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="asset-fallback">ॐ</span></div>
+        <div class="asset-box">${A.idolHtml(x)}</div>
         <h3>${e(x.name)}</h3><p>${x.sizeFt} ft · ${e(x.style)} · ${e(x.color)}</p>
         <b>${money(x.price)}</b>
         ${state.ownedIdols.includes(x.id)?`<button data-v5="select-idol" data-id="${x.id}" class="secondary">${state.selectedIdol===x.id?"SELECTED":"USE IDOL"}</button>`:`<button data-v5="buy-idol" data-id="${x.id}" class="primary">BUY</button>`}
@@ -136,7 +138,7 @@
   }
 
   function renderProcession(){
-    const unlocked=state.day>=state.duration;
+    const unlocked=state.completedDays.includes(state.duration);
     const steps=["Prepare Ganapati for farewell","Gather the mandal","Begin the procession","Chant Ganpati Bappa Morya","Reach the waterbody","Final aarti and prayers","Respectful visarjan"];
     if(!unlocked) return `<article class="v5-card"><span class="eyebrow">LOCKED UNTIL FINAL DAY</span><h2>Procession & Visarjan</h2><div class="procession-scene">${A?.processionSvg ? A.processionSvg(0,false) : ""}</div><p>Complete all ${state.duration} festival days first. You are currently on day ${state.day}.</p></article>`;
     return `<div class="v5-grid two"><article class="v5-card"><span class="eyebrow">FAREWELL PROCESSION</span><h2>Ganpati Bappa Morya</h2>
@@ -148,9 +150,10 @@
 
   function buy(kind,id){
     const map={idol:D.idols,mandap:D.mandaps,decor:D.decorations,puja:D.pujaItems}, item=map[kind].find(x=>x.id===id);
-    if(!item||!spend(item.price)) return alert("You need more modaks. Go back and play more levels.");
     const key={idol:"ownedIdols",mandap:"ownedMandaps",decor:"ownedDecor",puja:"ownedPuja"}[kind];
-    if(!state[key].includes(id)) state[key].push(id);
+    if (!item || state[key].includes(id)) return;
+    if (!spend(item.price)) return alert("You need more modaks. Go back and play more levels.");
+    state[key].push(id);
     if(kind==="idol"&&!state.selectedIdol) state.selectedIdol=id;
     if(kind==="mandap"&&!state.selectedMandap) state.selectedMandap=id;
     save(); render();
@@ -168,9 +171,9 @@
     if(a==="select-idol"){state.selectedIdol=id;save();render();return;} if(a==="select-mandap"){state.selectedMandap=id;save();render();return;}
     if(a==="toggle-decor"){const i=state.activeDecor.indexOf(id); if(i>=0)state.activeDecor.splice(i,1); else if(state.activeDecor.length<20)state.activeDecor.push(id); else alert("Maximum 20 active decorations in one scene."); save();render();return;}
     if(a==="learn-mantra"){if(!state.mantraLearned.includes(id))state.mantraLearned.push(id);save();render();return;}
-    if(a==="complete-day"){if(state.day<state.duration)state.day++; else state.processionStep=0;save();state.view=state.day>=state.duration?"procession":"festival";render();return;}
-    if(a==="procession-next"){const steps=7;if(state.processionStep<steps-1)state.processionStep++;else state.visarjanComplete=true;save();render();return;}
-    if(a==="back-game"){save();Promise.resolve(window.GFJAnonymousSave?.syncNow?.()).finally(()=>window.GFJClassic?.home?.());return;}
+    if(a==="complete-day"){if((state.dailyPuja["day-"+state.day]||[]).length<6)return;if(!state.completedDays.includes(state.day))state.completedDays.push(state.day);if(state.day<state.duration){state.day++;state.view="festival";}else{state.processionStep=0;state.view="procession";}save();render();return;}
+    if(a==="procession-next"){if(!state.completedDays.includes(state.duration))return;const steps=7;if(state.processionStep<steps-1)state.processionStep++;else state.visarjanComplete=true;save();render();return;}
+    if(a==="back-game"){save();window.GFJClassic?.home?.();void window.GFJAnonymousSave?.syncNow?.();return;}
   },true);
 
   document.addEventListener("change",ev=>{

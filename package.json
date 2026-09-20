@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite .",
-    "test": "node tests/v5.test.cjs"
+    "test": "node tests/v5.test.cjs && node tests/loading.test.cjs && node tests/memory.test.cjs && node tests/math.test.cjs && node tests/festival.test.cjs"
   },
   "devDependencies": {
     "jsdom": "^26.1.0",

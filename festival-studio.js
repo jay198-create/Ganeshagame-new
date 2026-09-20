@@ -25,7 +25,7 @@
   const money=n=>`${n} 🥟`;
   const wallet=()=>`<div class="v5-wallet"><b>${coins()}</b><span>MODAKS</span></div>`;
   const shell=(body)=>`<section class="v5-shell">
-    <div class="v5-top"><div><span class="eyebrow">GANESHA FESTIVAL STUDIO</span><h1>Build the celebration.</h1></div>${wallet()}</div>
+    <div class="v5-top"><div><span class="eyebrow">MY FESTIVAL</span><h1>Build your celebration.</h1></div>${wallet()}</div>
     <div class="v5-tabs">
       ${[
         ["setup","Mandal"],["idols","Idol shop"],["mandaps","Mandap"],["decor","Decor"],

@@ -18,6 +18,8 @@ vm.runInContext(fs.readFileSync("festival-art.js","utf8"),context);
 const D=context.window.GFJData,A=context.window.GFJArt;
 
 assert.equal(D.idols.length,105,"final idol catalog must contain 105 idols");
+assert(D.idols.every(x=>/assets\\/idols\\/idol_\\d{3}\\.png$/.test(x.image)),"every idol must point to an individual PNG");
+assert(!D.idols.some(x=>/catalog-|individuals\\.webp|gallery\\.webp/.test(x.image)),"catalog/sprite idol assets must not be used");
 assert.equal(D.mandaps.length,120,"mandap catalog must contain 120 designs");
 assert.equal(D.decorations.length,500,"decoration catalog must contain 500 designs");
 assert.equal(D.mantras.length,43,"mantra library must contain 43 learning passages");
@@ -38,6 +40,7 @@ const studioStyle=fs.readFileSync("festival-studio.css","utf8");
 
 assert(game.includes("GFJLevelArena?.open"),"Journey must route into the 100-level game system");
 assert(game.includes("GFJFestivalStudio?.open"),"My Festival must route into the upgraded festival system");
+assert(game.includes("function festivalGuide()"),"Ganesh Chaturthi guide page must exist");
 assert(!arena.includes('textContent="100 Levels"'),"no separate 100 Levels nav tab");
 assert(!studio.includes('textContent="Festival Studio"'),"no separate Festival Studio nav tab");
 assert(arena.includes("Original 25-round challenge"),"classic circuit remains inside Journey");

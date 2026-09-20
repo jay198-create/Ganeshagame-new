@@ -20,8 +20,15 @@ const D=context.window.GFJData,A=context.window.GFJArt;
 assert.equal(D.idols.length,105,"final idol catalog must contain 105 idols");
 assert.equal(D.mandaps.length,120,"mandap catalog must contain 120 designs");
 assert.equal(D.decorations.length,500,"decoration catalog must contain 500 designs");
+assert.equal(D.mantras.length,43,"mantra library must contain 43 learning passages");
+assert.equal(D.pujaItems.length,32,"puja collection must contain 32 ritual items");
+assert(D.pujaItems.every(x=>x.artKey && !x.icon),"puja items must use vector art keys instead of emoji icons");
 assert.equal(new Set(D.mandaps.map(x=>A.mandapSvg(x))).size,120,"mandap artwork must be distinct");
 assert.equal(new Set(D.decorations.map(x=>A.decorSvg(x))).size,500,"decoration artwork must be distinct");
+assert(D.mantras.some(x=>x.collection==="Sri Ganapati Talam"),"Ganapati Talam must be included");
+assert(D.mantras.some(x=>x.title==="Agajanana Padmarkam"),"Agajanana Padmarkam must be included");
+assert(D.mantras.some(x=>x.id==="gananam-tva"),"Rigveda Gananam Tva mantra must be included");
+assert(D.pujaItems.every(x=>A.pujaSvg(x).includes("puja-art")),"every puja item must render premium SVG artwork");
 
 const game=fs.readFileSync("game.js","utf8");
 const arena=fs.readFileSync("level-arena.js","utf8");
